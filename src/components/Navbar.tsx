@@ -2,12 +2,14 @@ import { Menu, Sun, Moon, Bell } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
 import { useEffect, useState } from 'react';
 import LenguageSelector from './LenguageSelector';
+import { useTranslation } from 'react-i18next';
 
 interface NavbarProps {
   onMenuClick: () => void;
 }
 
 const Navbar = ({ onMenuClick }: NavbarProps) => {
+  const { t } = useTranslation();
   const { theme, toggleTheme } = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -24,11 +26,13 @@ const Navbar = ({ onMenuClick }: NavbarProps) => {
   }, []);
 
   return (
-    <header className={`
-      sticky top-0 z-10 bg-white dark:bg-gray-800 
-      transition-shadow duration-200 
-      ${isScrolled ? 'shadow-md' : 'shadow-sm'}
-    `}>
+    <header
+      className={`
+        sticky top-0 z-10 bg-white dark:bg-gray-800
+        transition-shadow duration-200
+        ${isScrolled ? 'shadow-md' : 'shadow-sm'}
+      `}
+    >
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
@@ -39,7 +43,9 @@ const Navbar = ({ onMenuClick }: NavbarProps) => {
               <Menu size={24} />
             </button>
             <div className="md:flex md:items-center md:space-x-4">
-              <h1 className="text-lg font-semibold text-gray-900 dark:text-white md:block hidden">Finance Tracker</h1>
+              <h1 className="text-lg font-semibold text-gray-900 dark:text-white md:block hidden">
+                {t('navbar.appName')}
+              </h1>
             </div>
           </div>
 

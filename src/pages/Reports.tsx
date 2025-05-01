@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useTransactions } from '../hooks/useTransactions';
 import { useAuth } from '../hooks/useAuth';
 import { formatCurrency } from '../utils/textFormater';
@@ -10,6 +11,7 @@ type Period = 'week' | 'month' | 'year' | 'all';
 type ChartType = 'bar' | 'pie';
 
 const Reports = () => {
+  const { t } = useTranslation();
   const { transactions } = useTransactions();
   const { user } = useAuth();
 
@@ -66,12 +68,12 @@ const Reports = () => {
 
   return (
     <div className="py-6">
-      <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Reports</h1>
+      <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">{t('reports.title')}</h1>
       <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-4 mb-6">
         <div className="flex flex-wrap gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-              Time Period
+              {t('reports.timePeriodLabel')}
             </label>
             <div className="relative">
               <select
@@ -79,10 +81,10 @@ const Reports = () => {
                 onChange={(e) => setPeriod(e.target.value as Period)}
                 className="appearance-none block w-full pl-3 pr-10 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
               >
-                <option value="week">Last 7 days</option>
-                <option value="month">Last 30 days</option>
-                <option value="year">Last 12 months</option>
-                <option value="all">All time</option>
+                <option value="week">{t('reports.last7Days')}</option>
+                <option value="month">{t('reports.last30Days')}</option>
+                <option value="year">{t('reports.last12Months')}</option>
+                <option value="all">{t('reports.allTime')}</option>
               </select>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                 <ArrowDown size={16} className="text-gray-400" />
@@ -92,7 +94,7 @@ const Reports = () => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-              Chart Type
+              {t('reports.chartTypeLabel')}
             </label>
             <div className="flex bg-gray-100 dark:bg-gray-700 rounded-md p-1">
               <button
@@ -104,7 +106,7 @@ const Reports = () => {
                 onClick={() => setChartType('bar')}
               >
                 <BarChart size={16} className="mr-1" />
-                Bar
+                {t('reports.barChart')}
               </button>
               <button
                 type="button"
@@ -115,7 +117,7 @@ const Reports = () => {
                 onClick={() => setChartType('pie')}
               >
                 <PieChart size={16} className="mr-1" />
-                Pie
+                {t('reports.pieChart')}
               </button>
             </div>
           </div>
@@ -125,21 +127,21 @@ const Reports = () => {
       {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
-          <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Income</p>
+          <p className="text-sm font-medium text-gray-500 dark:text-gray-400">{t('reports.income')}</p>
           <h3 className="text-2xl font-bold text-green-600 dark:text-green-400 mt-1">
             {currencyFormater(totalIncome)}
           </h3>
         </div>
 
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
-          <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Expenses</p>
+          <p className="text-sm font-medium text-gray-500 dark:text-gray-400">{t('reports.expenses')}</p>
           <h3 className="text-2xl font-bold text-red-600 dark:text-red-400 mt-1">
             {currencyFormater(totalExpense)}
           </h3>
         </div>
 
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
-          <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Balance</p>
+          <p className="text-sm font-medium text-gray-500 dark:text-gray-400">{t('reports.balance')}</p>
           <h3 className={`text-2xl font-bold mt-1 ${totalIncome - totalExpense >= 0
             ? 'text-green-600 dark:text-green-400'
             : 'text-red-600 dark:text-red-400'

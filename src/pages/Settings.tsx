@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { User, Globe, Moon, Sun } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../hooks/useAuth';
 import { useTheme } from '../hooks/useTheme';
 import { useCurrency } from '../hooks/useCurrency';
 import LenguageSelector from '../components/LenguageSelector';
 
 const Settings = () => {
+  const { t } = useTranslation();
   const { user, logout, updateUser, checkAuth } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const { currencies } = useCurrency();
@@ -14,25 +16,25 @@ const Settings = () => {
   const [activeTab, setActiveTab] = useState('account');
 
   const handleUpdate = () => {
-    updateUser(currencyId || 1)
-    checkAuth()
-  }
+    updateUser(currencyId || 1);
+    checkAuth();
+  };
 
   const renderTab = () => {
     switch (activeTab) {
       case 'account':
         return (
           <div>
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Account Settings</h2>
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{t('settings.accountSettings')}</h2>
 
             <div className="space-y-4">
               <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
-                <h3 className="text-md font-medium text-gray-900 dark:text-white mb-4">Personal Information</h3>
+                <h3 className="text-md font-medium text-gray-900 dark:text-white mb-4">{t('settings.personalInformation')}</h3>
 
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                      Name
+                      {t('settings.nameLabel')}
                     </label>
                     <input
                       type="text"
@@ -44,7 +46,7 @@ const Settings = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                      Email
+                      {t('settings.emailLabel')}
                     </label>
                     <input
                       type="email"
@@ -56,15 +58,15 @@ const Settings = () => {
                 </div>
 
                 <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-                  <p className="text-sm text-gray-500 dark:text-gray-400">To change your personal information, please contact support.</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">{t('settings.personalInfoChange')}</p>
                 </div>
               </div>
 
               <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
-                <h3 className="text-md font-medium text-gray-900 dark:text-white mb-4">Account Security</h3>
+                <h3 className="text-md font-medium text-gray-900 dark:text-white mb-4">{t('settings.accountSecurity')}</h3>
 
                 <button className="w-full py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 dark:focus:ring-offset-gray-900">
-                  Change Password
+                  {t('settings.changePasswordButton')}
                 </button>
 
                 <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
@@ -72,7 +74,7 @@ const Settings = () => {
                     onClick={logout}
                     className="w-full py-2 px-4 border border-red-300 dark:border-red-700 rounded-md shadow-sm text-sm font-medium text-red-700 dark:text-red-300 bg-white dark:bg-gray-800 hover:bg-red-50 dark:hover:bg-red-900/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 dark:focus:ring-offset-gray-900"
                   >
-                    Log Out
+                    {t('settings.logoutButton')}
                   </button>
                 </div>
               </div>
@@ -83,15 +85,15 @@ const Settings = () => {
       case 'preferences':
         return (
           <div>
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Preferences</h2>
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{t('settings.preferences')}</h2>
 
             <div className="space-y-4">
               <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
-                <h3 className="text-md font-medium text-gray-900 dark:text-white mb-4">Currency</h3>
+                <h3 className="text-md font-medium text-gray-900 dark:text-white mb-4">{t('settings.currency')}</h3>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                    Primary Currency
+                    {t('settings.primaryCurrencyLabel')}
                   </label>
                   <div className="flex items-center">
                     <div className="flex-1">
@@ -111,36 +113,37 @@ const Settings = () => {
                     </div>
                     <button
                       onClick={handleUpdate}
-                      className="ml-4 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 dark:focus:ring-offset-gray-900">
-                      Change
+                      className="ml-4 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 dark:focus:ring-offset-gray-900"
+                    >
+                      {t('settings.changeButton')}
                     </button>
                   </div>
                   <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                    This is the default currency used across your finances.
+                    {t('settings.currencyDescription')}
                   </p>
                 </div>
               </div>
 
               <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
-                <h3 className="text-md font-medium text-gray-900 dark:text-white mb-4">Lenguage</h3>
+                <h3 className="text-md font-medium text-gray-900 dark:text-white mb-4">{t('settings.language')}</h3>
 
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-700 dark:text-gray-300">Usage Lenguage</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Select a lenguage</p>
+                    <p className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('settings.usageLanguage')}</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">{t('settings.selectLanguage')}</p>
                   </div>
                   <LenguageSelector />
                 </div>
               </div>
 
               <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
-                <h3 className="text-md font-medium text-gray-900 dark:text-white mb-4">Appearance</h3>
+                <h3 className="text-md font-medium text-gray-900 dark:text-white mb-4">{t('settings.appearance')}</h3>
 
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-700 dark:text-gray-300">Dark Mode</p>
+                    <p className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('settings.darkMode')}</p>
                     <p className="text-sm text-gray-500 dark:text-gray-400">
-                      {theme === 'dark' ? 'Currently using dark mode' : 'Currently using light mode'}
+                      {theme === 'dark' ? t('settings.darkModeActive') : t('settings.lightModeActive')}
                     </p>
                   </div>
                   <button
@@ -153,14 +156,14 @@ const Settings = () => {
               </div>
 
               <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
-                <h3 className="text-md font-medium text-gray-900 dark:text-white mb-4">Notifications</h3>
+                <h3 className="text-md font-medium text-gray-900 dark:text-white mb-4">{t('settings.notifications')}</h3>
 
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm font-medium text-gray-700 dark:text-gray-300">Email Notifications</p>
+                      <p className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('settings.emailNotifications')}</p>
                       <p className="text-sm text-gray-500 dark:text-gray-400">
-                        Receive email updates about your account
+                        {t('settings.emailNotificationsDescription')}
                       </p>
                     </div>
                     <div className="flex items-center">
@@ -175,9 +178,9 @@ const Settings = () => {
 
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm font-medium text-gray-700 dark:text-gray-300">Budget Alerts</p>
+                      <p className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('settings.budgetAlerts')}</p>
                       <p className="text-sm text-gray-500 dark:text-gray-400">
-                        Get notified when you're close to your budget limit
+                        {t('settings.budgetAlertsDescription')}
                       </p>
                     </div>
                     <div className="flex items-center">
@@ -202,7 +205,7 @@ const Settings = () => {
 
   return (
     <div className="py-6">
-      <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Settings</h1>
+      <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">{t('settings.title')}</h1>
 
       <div className="flex flex-col md:flex-row gap-6">
         {/* Sidebar */}
@@ -229,7 +232,7 @@ const Settings = () => {
                   }`}
               >
                 <User size={18} className="mr-3 flex-shrink-0" />
-                Account
+                {t('settings.accountTab')}
               </button>
 
               <button
@@ -240,7 +243,7 @@ const Settings = () => {
                   }`}
               >
                 <Globe size={18} className="mr-3 flex-shrink-0" />
-                Preferences
+                {t('settings.preferencesTab')}
               </button>
             </div>
           </nav>

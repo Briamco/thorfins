@@ -5,6 +5,7 @@ import { useCategories } from '../hooks/useCategories';
 import { useAuth } from '../hooks/useAuth';
 import { Transaction } from '../contexts/TransactionsContext';
 import { formatCurrency } from '../utils/textFormater';
+import { useTranslation } from 'react-i18next';
 
 interface TransactionModalProps {
   isOpen: boolean;
@@ -13,6 +14,7 @@ interface TransactionModalProps {
 }
 
 const TransactionModal = ({ isOpen, onClose, transaction }: TransactionModalProps) => {
+  const { t } = useTranslation('transactions');
   const { addTransaction, updateTransaction } = useTransactions();
   const { categories } = useCategories();
   const { user } = useAuth();
@@ -26,12 +28,12 @@ const TransactionModal = ({ isOpen, onClose, transaction }: TransactionModalProp
 
   const currencyFormater = (amount: number) => {
     if (user) {
-      return formatCurrency(amount, user?.currency.currency, user?.currency.countryId)
+      return formatCurrency(amount, user?.currency.currency, user?.currency.countryId);
     }
-    return ''
-  }
+    return '';
+  };
 
-  const currencySymbol = currencyFormater(0).split('0.00')[0]
+  const currencySymbol = currencyFormater(0).split('0.00')[0];
 
   const isEditing = !!transaction;
 
@@ -54,12 +56,12 @@ const TransactionModal = ({ isOpen, onClose, transaction }: TransactionModalProp
     setError('');
 
     if (!amount || isNaN(Number(amount)) || Number(amount) <= 0) {
-      setError('Please enter a valid amount');
+      setError(t('addEditTransaction.invalidAmount'));
       return;
     }
 
     if (!categoryId) {
-      setError('Please select a category');
+      setError(t('addEditTransaction.selectCategory'));
       return;
     }
 
@@ -81,7 +83,7 @@ const TransactionModal = ({ isOpen, onClose, transaction }: TransactionModalProp
 
       onClose();
     } catch (err: any) {
-      setError(err.message || 'An error occurred');
+      setError(err.message || t('addEditTransaction.errorMessage'));
     } finally {
       setIsSubmitting(false);
     }
@@ -97,7 +99,7 @@ const TransactionModal = ({ isOpen, onClose, transaction }: TransactionModalProp
         <div className="relative transform overflow-hidden rounded-lg bg-white dark:bg-gray-800 text-left shadow-xl transition-all w-full max-w-md">
           <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-              {isEditing ? 'Edit Transaction' : 'Add Transaction'}
+              {isEditing ? t('addEditTransaction.editTitle') : t('addEditTransaction.addTitle')}
             </h3>
             <button
               onClick={onClose}
@@ -124,7 +126,7 @@ const TransactionModal = ({ isOpen, onClose, transaction }: TransactionModalProp
                     }`}
                   onClick={() => setType('expense')}
                 >
-                  Expense
+                  {t('addEditTransaction.expense')}
                 </button>
                 <button
                   type="button"
@@ -134,12 +136,12 @@ const TransactionModal = ({ isOpen, onClose, transaction }: TransactionModalProp
                     }`}
                   onClick={() => setType('income')}
                 >
-                  Income
+                  {t('addEditTransaction.income')}
                 </button>
               </div>
 
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Amount
+                {t('addEditTransaction.amountLabel')}
               </label>
               <div className="relative rounded-md shadow-sm">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -159,16 +161,16 @@ const TransactionModal = ({ isOpen, onClose, transaction }: TransactionModalProp
 
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Category
+                {t('addEditTransaction.categoryLabel')}
               </label>
               <select
                 value={categoryId}
                 onChange={(e) => setCategoryId(e.target.value)}
                 className="block w-full py-2 px-3 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
               >
-                <option value="">Select a category</option>
+                <option value="">{t('addEditTransaction.selectCategoryOption')}</option>
                 {categories
-                  .filter(() => type === 'expense' ? true : true) // Filter later if needed
+                  .filter(() => (type === 'expense' ? true : true)) // Filter later if needed
                   .map((category) => (
                     <option key={category.id} value={category.id}>
                       {category.name}
@@ -179,14 +181,14 @@ const TransactionModal = ({ isOpen, onClose, transaction }: TransactionModalProp
 
             <div className="mb-6">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Description (Optional)
+                {t('addEditTransaction.descriptionLabel')}
               </label>
               <textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 rows={2}
                 className="block w-full py-2 px-3 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
-                placeholder="What's this transaction for?"
+                placeholder={t('addEditTransaction.descriptionPlaceholder')}
               ></textarea>
             </div>
 
@@ -196,7 +198,7 @@ const TransactionModal = ({ isOpen, onClose, transaction }: TransactionModalProp
                 onClick={onClose}
                 className="mr-3 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors"
               >
-                Cancel
+                {t('addEditTransaction.cancelButton')}
               </button>
               <button
                 type="submit"
@@ -210,9 +212,12 @@ const TransactionModal = ({ isOpen, onClose, transaction }: TransactionModalProp
                 `}
               >
                 {isSubmitting
-                  ? isEditing ? 'Saving...' : 'Adding...'
-                  : isEditing ? 'Save Changes' : 'Add Transaction'
-                }
+                  ? isEditing
+                    ? t('addEditTransaction.savingButton')
+                    : t('addEditTransaction.addingButton')
+                  : isEditing
+                    ? t('addEditTransaction.saveChangesButton')
+                    : t('addEditTransaction.addButton')}
               </button>
             </div>
           </form>

@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { Home, BarChart2, List, Tag, Settings, LogOut, X } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
+import { useTranslation } from 'react-i18next';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -8,6 +9,7 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
+  const { t } = useTranslation();
   const { user, logout } = useAuth();
 
   const handleLogout = async () => {
@@ -15,11 +17,11 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
   };
 
   const links = [
-    { to: '/', icon: <Home size={20} />, text: 'Dashboard' },
-    { to: '/transactions', icon: <List size={20} />, text: 'Transactions' },
-    { to: '/categories', icon: <Tag size={20} />, text: 'Categories' },
-    { to: '/reports', icon: <BarChart2 size={20} />, text: 'Reports' },
-    { to: '/settings', icon: <Settings size={20} />, text: 'Settings' },
+    { to: '/', icon: <Home size={20} />, text: t('sidebar.dashboard') },
+    { to: '/transactions', icon: <List size={20} />, text: t('sidebar.transactions') },
+    { to: '/categories', icon: <Tag size={20} />, text: t('sidebar.categories') },
+    { to: '/reports', icon: <BarChart2 size={20} />, text: t('sidebar.reports') },
+    { to: '/settings', icon: <Settings size={20} />, text: t('sidebar.settings') },
   ];
 
   return (
@@ -33,14 +35,20 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
       )}
 
       {/* Sidebar */}
-      <div className={`
-        fixed inset-y-0 left-0 flex flex-col z-50 w-64 bg-white dark:bg-gray-800 shadow-lg transition-transform duration-300 ease-in-out transform
-        ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 md:static md:z-0
-      `}>
+      <div
+        className={`
+          fixed inset-y-0 left-0 flex flex-col z-50 w-64 bg-white dark:bg-gray-800 shadow-lg transition-transform duration-300 ease-in-out transform
+          ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 md:static md:z-0
+        `}
+      >
         <div className="flex items-center justify-between h-16 px-4 border-b dark:border-gray-700">
           <div className="flex items-center">
-            <div className="w-8 h-8 rounded-full bg-primary-500 flex items-center justify-center text-white font-bold">F</div>
-            <h1 className="ml-2 text-xl font-semibold text-gray-900 dark:text-white">Finance App</h1>
+            <div className="w-8 h-8 rounded-full bg-primary-500 flex items-center justify-center text-white font-bold">
+              {t('sidebar.appInitial')}
+            </div>
+            <h1 className="ml-2 text-xl font-semibold text-gray-900 dark:text-white">
+              {t('sidebar.appName')}
+            </h1>
           </div>
           <button
             onClick={() => setIsOpen(false)}
@@ -87,7 +95,7 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
             className="w-full flex items-center px-3 py-2 text-sm font-medium text-red-600 dark:text-red-400 rounded-md hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors duration-200"
           >
             <LogOut size={18} className="mr-2" />
-            Log out
+            {t('sidebar.logout')}
           </button>
         </div>
       </div>

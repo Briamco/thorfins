@@ -1,10 +1,12 @@
 import { useState, FormEvent, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, Mail, Lock } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../hooks/useAuth';
 import { useTheme } from '../hooks/useTheme';
 
 const Login = () => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -21,12 +23,12 @@ const Login = () => {
     setFormError('');
 
     if (!email) {
-      setFormError('Email is required');
+      setFormError(t('login.emailRequired'));
       return;
     }
 
     if (!password) {
-      setFormError('Password is required');
+      setFormError(t('login.passwordRequired'));
       return;
     }
 
@@ -55,12 +57,13 @@ const Login = () => {
             <span className="text-primary-600 dark:text-primary-300 text-2xl font-bold">F</span>
           </div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white">
-            Sign in to your account
+            {t('login.signInTitle')}
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
-            Or{' '}
+            {t('login.or')}
+            {' '}
             <Link to="/register" className="font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300">
-              create a new account
+              {t('login.createAccountLink')}
             </Link>
           </p>
         </div>
@@ -75,7 +78,7 @@ const Login = () => {
           <div className="rounded-md -space-y-px">
             <div className="mb-4">
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Email address
+                {t('login.emailLabel')}
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -89,14 +92,14 @@ const Login = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="appearance-none rounded-md block w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-400 dark:placeholder-gray-500 text-gray-900 dark:text-gray-100 dark:bg-gray-700 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
-                  placeholder="you@example.com"
+                  placeholder={t('login.emailPlaceholder')}
                 />
               </div>
             </div>
 
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Password
+                {t('login.passwordLabel')}
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -110,7 +113,7 @@ const Login = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="appearance-none rounded-md block w-full pl-10 pr-10 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-400 dark:placeholder-gray-500 text-gray-900 dark:text-gray-100 dark:bg-gray-700 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
-                  placeholder="********"
+                  placeholder={t('login.passwordPlaceholder')}
                 />
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3">
                   <button
@@ -128,7 +131,7 @@ const Login = () => {
           <div className="flex items-center justify-between">
             <div className="text-sm">
               <a href="#" className="font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300">
-                Forgot your password?
+                {t('login.forgotPasswordLink')}
               </a>
             </div>
           </div>
@@ -145,7 +148,7 @@ const Login = () => {
                 }
               `}
             >
-              {isSubmitting ? 'Signing in...' : 'Sign in'}
+              {isSubmitting ? t('login.signingInButton') : t('login.signInButton')}
             </button>
           </div>
         </form>

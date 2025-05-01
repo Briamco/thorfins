@@ -1,11 +1,13 @@
 import { useState, FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, Mail, Lock, User, CreditCard } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../hooks/useAuth';
 import { useTheme } from '../hooks/useTheme';
 import { useCurrency } from '../hooks/useCurrency';
 
 const Register = () => {
+  const { t } = useTranslation();
   const { currencies } = useCurrency();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -26,27 +28,27 @@ const Register = () => {
     setFormError('');
 
     if (!name) {
-      setFormError('Name is required');
+      setFormError(t('register.nameRequired'));
       return;
     }
 
     if (!email) {
-      setFormError('Email is required');
+      setFormError(t('register.emailRequired'));
       return;
     }
 
     if (!password) {
-      setFormError('Password is required');
+      setFormError(t('register.passwordRequired'));
       return;
     }
 
     if (password !== confirmPassword) {
-      setFormError('Passwords do not match');
+      setFormError(t('register.passwordsDoNotMatch'));
       return;
     }
 
     if (password.length < 6) {
-      setFormError('Password must be at least 6 characters long');
+      setFormError(t('register.passwordLength'));
       return;
     }
 
@@ -69,12 +71,13 @@ const Register = () => {
             <span className="text-primary-600 dark:text-primary-300 text-2xl font-bold">F</span>
           </div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white">
-            Create your account
+            {t('register.createAccountTitle')}
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
-            Or{' '}
+            {t('register.or')}
+            {' '}
             <Link to="/login" className="font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300">
-              sign in to your existing account
+              {t('register.signInLink')}
             </Link>
           </p>
         </div>
@@ -89,7 +92,7 @@ const Register = () => {
           <div className="rounded-md space-y-4">
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Full Name
+                {t('register.fullNameLabel')}
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -103,14 +106,14 @@ const Register = () => {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   className="appearance-none rounded-md block w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-400 dark:placeholder-gray-500 text-gray-900 dark:text-gray-100 dark:bg-gray-700 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
-                  placeholder="John Doe"
+                  placeholder={t('register.fullNamePlaceholder')}
                 />
               </div>
             </div>
 
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Email address
+                {t('register.emailLabel')}
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -124,14 +127,14 @@ const Register = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="appearance-none rounded-md block w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-400 dark:placeholder-gray-500 text-gray-900 dark:text-gray-100 dark:bg-gray-700 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
-                  placeholder="you@example.com"
+                  placeholder={t('register.emailPlaceholder')}
                 />
               </div>
             </div>
 
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Password
+                {t('register.passwordLabel')}
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -145,7 +148,7 @@ const Register = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="appearance-none rounded-md block w-full pl-10 pr-10 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-400 dark:placeholder-gray-500 text-gray-900 dark:text-gray-100 dark:bg-gray-700 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
-                  placeholder="********"
+                  placeholder={t('register.passwordPlaceholder')}
                 />
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3">
                   <button
@@ -161,7 +164,7 @@ const Register = () => {
 
             <div>
               <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Confirm Password
+                {t('register.confirmPasswordLabel')}
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -175,14 +178,14 @@ const Register = () => {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   className="appearance-none rounded-md block w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-400 dark:placeholder-gray-500 text-gray-900 dark:text-gray-100 dark:bg-gray-700 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
-                  placeholder="********"
+                  placeholder={t('register.confirmPasswordPlaceholder')}
                 />
               </div>
             </div>
 
             <div>
               <label htmlFor="currency" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Primary Currency
+                {t('register.primaryCurrencyLabel')}
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -217,7 +220,7 @@ const Register = () => {
                 }
               `}
             >
-              {isSubmitting ? 'Creating account...' : 'Create account'}
+              {isSubmitting ? t('register.creatingAccountButton') : t('register.createAccountButton')}
             </button>
           </div>
         </form>

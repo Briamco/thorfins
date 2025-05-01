@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { useCategories } from '../hooks/useCategories';
 import { Category } from '../contexts/CategoriesContext';
 
@@ -7,7 +8,7 @@ import { Category } from '../contexts/CategoriesContext';
 const commonIcons = [
   '🍔', '🛒', '🏠', '🚗', '💊', '🎓', '💼', '✈️',
   '🎬', '🎮', '👕', '💇', '🏋️', '🎁', '💰', '💳',
-  '📱', '⚡', '💧', '🔥', '🍾', '👨‍👩‍👧‍👦', '💸', '🏦'
+  '📱', '⚡', '💧', '🔥', '🍾', '👨‍👩‍👧‍👦', '💸', '🏦',
 ];
 
 interface CategoryModalProps {
@@ -22,6 +23,7 @@ function isEmoji(str: string): boolean {
 }
 
 const CategoryModal = ({ isOpen, onClose, category }: CategoryModalProps) => {
+  const { t } = useTranslation('categories');
   const { addCategory, updateCategory } = useCategories();
 
   const [name, setName] = useState('');
@@ -53,17 +55,17 @@ const CategoryModal = ({ isOpen, onClose, category }: CategoryModalProps) => {
     setError('');
 
     if (!name.trim()) {
-      setError('Please enter a category name');
+      setError(t('categories.nameRequired'));
       return;
     }
 
     if (!icon.trim()) {
-      setError('Please select an icon');
+      setError(t('categories.iconRequired'));
       return;
     }
 
     if (!isEmoji(icon.trim())) {
-      setError('Please enter a valid emoji (e.g., 😎, 🍔, 🏠)');
+      setError(t('categories.invalidEmoji'));
       return;
     }
 
@@ -83,7 +85,7 @@ const CategoryModal = ({ isOpen, onClose, category }: CategoryModalProps) => {
 
       onClose();
     } catch (err: any) {
-      setError(err.message || 'An error occurred');
+      setError(err.message || t('categories.errorMessage'));
     } finally {
       setIsSubmitting(false);
     }
@@ -99,7 +101,7 @@ const CategoryModal = ({ isOpen, onClose, category }: CategoryModalProps) => {
         <div className="relative transform overflow-hidden rounded-lg bg-white dark:bg-gray-800 text-left shadow-xl transition-all w-full max-w-md">
           <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-              {isEditing ? 'Edit Category' : 'Add Category'}
+              {isEditing ? t('categories.editCategory') : t('categories.addCategory')}
             </h3>
             <button
               onClick={onClose}
@@ -118,13 +120,13 @@ const CategoryModal = ({ isOpen, onClose, category }: CategoryModalProps) => {
 
             {!canEdit && (
               <div className="mb-4 bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-300 p-3 rounded-md text-sm">
-                This is a default category. You can only change the icon.
+                {t('categories.defaultCategoryAlert')}
               </div>
             )}
 
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Category Name
+                {t('categories.nameLabel')}
               </label>
               <input
                 type="text"
@@ -132,20 +134,20 @@ const CategoryModal = ({ isOpen, onClose, category }: CategoryModalProps) => {
                 onChange={(e) => setName(e.target.value)}
                 disabled={!canEdit}
                 className={`
-                  block w-full px-3 py-2 rounded-md border border-gray-300 dark:border-gray-600 
-                  text-gray-900 dark:text-gray-100 
+                  block w-full px-3 py-2 rounded-md border border-gray-300 dark:border-gray-600
+                  text-gray-900 dark:text-gray-100
                   ${!canEdit
                     ? 'bg-gray-100 dark:bg-gray-800 cursor-not-allowed'
                     : 'bg-white dark:bg-gray-700 focus:outline-none focus:ring-primary-500 focus:border-primary-500'
                   }
                 `}
-                placeholder="e.g., Groceries, Rent, Salary"
+                placeholder={t('categories.namePlaceholder')}
               />
             </div>
 
             <div className="mb-6">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Icon
+                {t('categories.iconLabel')}
               </label>
               <div className="grid grid-cols-8 gap-2 mb-2">
                 {commonIcons.map((emoji) => (
@@ -187,10 +189,10 @@ const CategoryModal = ({ isOpen, onClose, category }: CategoryModalProps) => {
                     setIcon(input);
                     setCustomIconError('');
                   } else {
-                    setCustomIconError('❌ No es un emoji válido');
+                    setCustomIconError(t('categories.invalidEmojiError'));
                   }
                 }}
-                placeholder="O escribe tu emoji"
+                placeholder={t('categories.customIconPlaceholder')}
                 className="w-full px-3 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
               />
 
@@ -199,7 +201,7 @@ const CategoryModal = ({ isOpen, onClose, category }: CategoryModalProps) => {
               )}
 
               <div className="mt-3 text-center">
-                <span className="text-sm text-gray-500 dark:text-gray-400">Selected icon: </span>
+                <span className="text-sm text-gray-500 dark:text-gray-400">{t('categories.selectedIcon')}: </span>
                 <span className="text-2xl">{icon}</span>
               </div>
             </div>
@@ -210,7 +212,7 @@ const CategoryModal = ({ isOpen, onClose, category }: CategoryModalProps) => {
                 onClick={onClose}
                 className="mr-3 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors"
               >
-                Cancel
+                {t('categories.cancelButton')}
               </button>
               <button
                 type="submit"
@@ -224,9 +226,8 @@ const CategoryModal = ({ isOpen, onClose, category }: CategoryModalProps) => {
                 `}
               >
                 {isSubmitting
-                  ? isEditing ? 'Saving...' : 'Adding...'
-                  : isEditing ? 'Save Changes' : 'Add Category'
-                }
+                  ? isEditing ? t('categories.savingButton') : t('categories.addingButton')
+                  : isEditing ? t('categories.saveChangesButton') : t('categories.addButton')}
               </button>
             </div>
           </form>
