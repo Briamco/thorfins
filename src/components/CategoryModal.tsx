@@ -23,7 +23,7 @@ function isEmoji(str: string): boolean {
 }
 
 const CategoryModal = ({ isOpen, onClose, category }: CategoryModalProps) => {
-  const { t } = useTranslation('categories');
+  const { t } = useTranslation();
   const { addCategory, updateCategory } = useCategories();
 
   const [name, setName] = useState('');

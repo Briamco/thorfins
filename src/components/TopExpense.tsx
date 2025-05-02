@@ -11,7 +11,7 @@ interface TopExpenseProps {
 }
 
 const TopExpenseCategory = ({ user, totalExpense }: TopExpenseProps) => {
-  const { t } = useTranslation('dashboard');
+  const { t } = useTranslation();
   const { transactions } = useTransactions();
   const { categories } = useCategories();
 

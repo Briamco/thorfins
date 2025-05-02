@@ -13,7 +13,7 @@ type SortOrder = 'asc' | 'desc';
 type FilterType = 'all' | 'income' | 'expense';
 
 const Transactions = () => {
-  const { t } = useTranslation('transactions');
+  const { t } = useTranslation();
   const { transactions, loading, deleteTransaction } = useTransactions();
   const { categories } = useCategories();
   const { user } = useAuth();
@@ -243,8 +243,8 @@ const Transactions = () => {
                       </td>
                       <td
                         className={`px-6 py-4 whitespace-nowrap text-sm font-medium text-right ${transaction.type === 'income'
-                            ? 'text-green-600 dark:text-green-400'
-                            : 'text-red-600 dark:text-red-400'
+                          ? 'text-green-600 dark:text-green-400'
+                          : 'text-red-600 dark:text-red-400'
                           }`}
                       >
                         {transaction.type === 'income' ? '+' : '-'}{currencyFormater(transaction.amount)}

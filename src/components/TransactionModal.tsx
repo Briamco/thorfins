@@ -14,7 +14,7 @@ interface TransactionModalProps {
 }
 
 const TransactionModal = ({ isOpen, onClose, transaction }: TransactionModalProps) => {
-  const { t } = useTranslation('transactions');
+  const { t } = useTranslation();
   const { addTransaction, updateTransaction } = useTransactions();
   const { categories } = useCategories();
   const { user } = useAuth();
@@ -56,12 +56,12 @@ const TransactionModal = ({ isOpen, onClose, transaction }: TransactionModalProp
     setError('');
 
     if (!amount || isNaN(Number(amount)) || Number(amount) <= 0) {
-      setError(t('addEditTransaction.invalidAmount'));
+      setError(t('transactions.addEditTransaction.invalidAmount'));
       return;
     }
 
     if (!categoryId) {
-      setError(t('addEditTransaction.selectCategory'));
+      setError(t('transactions.addEditTransaction.selectCategory'));
       return;
     }
 
@@ -83,7 +83,7 @@ const TransactionModal = ({ isOpen, onClose, transaction }: TransactionModalProp
 
       onClose();
     } catch (err: any) {
-      setError(err.message || t('addEditTransaction.errorMessage'));
+      setError(err.message || t('transactions.addEditTransaction.errorMessage'));
     } finally {
       setIsSubmitting(false);
     }
@@ -99,7 +99,7 @@ const TransactionModal = ({ isOpen, onClose, transaction }: TransactionModalProp
         <div className="relative transform overflow-hidden rounded-lg bg-white dark:bg-gray-800 text-left shadow-xl transition-all w-full max-w-md">
           <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-              {isEditing ? t('addEditTransaction.editTitle') : t('addEditTransaction.addTitle')}
+              {isEditing ? t('transactions.addEditTransaction.editTitle') : t('transactions.addEditTransaction.addTitle')}
             </h3>
             <button
               onClick={onClose}
@@ -126,7 +126,7 @@ const TransactionModal = ({ isOpen, onClose, transaction }: TransactionModalProp
                     }`}
                   onClick={() => setType('expense')}
                 >
-                  {t('addEditTransaction.expense')}
+                  {t('transactions.addEditTransaction.expense')}
                 </button>
                 <button
                   type="button"
@@ -136,12 +136,12 @@ const TransactionModal = ({ isOpen, onClose, transaction }: TransactionModalProp
                     }`}
                   onClick={() => setType('income')}
                 >
-                  {t('addEditTransaction.income')}
+                  {t('transactions.addEditTransaction.income')}
                 </button>
               </div>
 
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                {t('addEditTransaction.amountLabel')}
+                {t('transactions.addEditTransaction.amountLabel')}
               </label>
               <div className="relative rounded-md shadow-sm">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -161,14 +161,14 @@ const TransactionModal = ({ isOpen, onClose, transaction }: TransactionModalProp
 
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                {t('addEditTransaction.categoryLabel')}
+                {t('transactions.addEditTransaction.categoryLabel')}
               </label>
               <select
                 value={categoryId}
                 onChange={(e) => setCategoryId(e.target.value)}
                 className="block w-full py-2 px-3 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
               >
-                <option value="">{t('addEditTransaction.selectCategoryOption')}</option>
+                <option value="">{t('transactions.addEditTransaction.selectCategoryOption')}</option>
                 {categories
                   .filter(() => (type === 'expense' ? true : true)) // Filter later if needed
                   .map((category) => (
@@ -181,14 +181,14 @@ const TransactionModal = ({ isOpen, onClose, transaction }: TransactionModalProp
 
             <div className="mb-6">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                {t('addEditTransaction.descriptionLabel')}
+                {t('transactions.addEditTransaction.descriptionLabel')}
               </label>
               <textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 rows={2}
                 className="block w-full py-2 px-3 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
-                placeholder={t('addEditTransaction.descriptionPlaceholder')}
+                placeholder={t('transactions.addEditTransaction.descriptionPlaceholder')}
               ></textarea>
             </div>
 
@@ -198,7 +198,7 @@ const TransactionModal = ({ isOpen, onClose, transaction }: TransactionModalProp
                 onClick={onClose}
                 className="mr-3 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors"
               >
-                {t('addEditTransaction.cancelButton')}
+                {t('transactions.addEditTransaction.cancelButton')}
               </button>
               <button
                 type="submit"
@@ -213,11 +213,11 @@ const TransactionModal = ({ isOpen, onClose, transaction }: TransactionModalProp
               >
                 {isSubmitting
                   ? isEditing
-                    ? t('addEditTransaction.savingButton')
-                    : t('addEditTransaction.addingButton')
+                    ? t('transactions.addEditTransaction.savingButton')
+                    : t('transactions.addEditTransaction.addingButton')
                   : isEditing
-                    ? t('addEditTransaction.saveChangesButton')
-                    : t('addEditTransaction.addButton')}
+                    ? t('transactions.addEditTransaction.saveChangesButton')
+                    : t('transactions.addEditTransaction.addButton')}
               </button>
             </div>
           </form>

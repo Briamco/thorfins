@@ -20,7 +20,7 @@ interface ChartProps {
 }
 
 const Charts = ({ period, chartType }: ChartProps) => {
-  const { t } = useTranslation('reports');
+  const { t } = useTranslation();
   const { transactions } = useTransactions();
   const { categories } = useCategories();
 
@@ -81,6 +81,7 @@ const Charts = ({ period, chartType }: ChartProps) => {
 
   const pieData = expenseCategoriesArray.map((item, index) => ({
     name: `${item.categoryIcon} ${item.categoryName}`,
+    labelname: `${item.categoryIcon} ${item.categoryName} - ${item.amount}`,
     value: item.amount,
     color: COLORS[index % COLORS.length],
   }));
@@ -123,7 +124,7 @@ const Charts = ({ period, chartType }: ChartProps) => {
               <Bar dataKey="amount" fill="#3b82f6" radius={[4, 4, 0, 0]} />
             </ReBarChart>
           ) : (
-            <RePieChart width={300} height={300}>
+            <RePieChart width={500} height={300}>
               <Pie
                 data={pieData}
                 dataKey="value"
@@ -132,12 +133,11 @@ const Charts = ({ period, chartType }: ChartProps) => {
                 cy="50%"
                 outerRadius={120}
                 innerRadius={60}
-                label
               >
                 {pieData.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={entry.color} />
                 ))}
-                <LabelList dataKey="name" position="outside" stroke="#8884d8" />
+                <LabelList dataKey="labelname" position="outside" stroke="color" />
               </Pie>
               <Tooltip />
             </RePieChart>

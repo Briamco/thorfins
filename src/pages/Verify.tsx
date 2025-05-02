@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { MailCheck } from 'lucide-react';
 
 const Verify = () => {
-  const { t } = useTranslation('verify');
+  const { t } = useTranslation();
   const [code, setCode] = useState('');
   const [formError, setFormError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
