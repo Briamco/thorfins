@@ -59,7 +59,8 @@ const TopExpenseCategory = ({ user, totalExpense }: TopExpenseProps) => {
               </div>
               <div className="flex-grow min-w-0">
                 <p className="text-sm font-medium text-gray-700 dark:text-gray-300 truncate">
-                  {category.categoryName}
+                  {category.categoryName} -
+                  <span className="text-gray-500 dark:text-gray-400 font-normal"> {currencyFormater(category.amount)}</span>
                 </p>
                 <div className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full mt-1">
                   <div
@@ -70,7 +71,7 @@ const TopExpenseCategory = ({ user, totalExpense }: TopExpenseProps) => {
               </div>
               <div className="ml-3 flex-shrink-0">
                 <p className="text-sm font-semibold text-gray-900 dark:text-white">
-                  {category && currencyFormater(category.amount)}
+                  {((category.amount / totalExpense) * 100).toFixed(2)}%
                 </p>
               </div>
             </div>

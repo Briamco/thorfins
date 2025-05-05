@@ -13,7 +13,7 @@ const Login = () => {
   const [formError, setFormError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { login, error, clearError } = useAuth();
+  const { login, error, clearError, checkAuth } = useAuth();
   const { theme } = useTheme();
   const navigate = useNavigate();
 
@@ -41,6 +41,8 @@ const Login = () => {
     } finally {
       setIsSubmitting(false);
     }
+
+    await checkAuth()
   };
 
   useEffect(() => {

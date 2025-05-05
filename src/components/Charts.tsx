@@ -17,9 +17,10 @@ import { useTranslation } from 'react-i18next';
 interface ChartProps {
   period: 'week' | 'month' | 'year' | 'all';
   chartType: 'bar' | 'pie';
+  totalExpense: number
 }
 
-const Charts = ({ period, chartType }: ChartProps) => {
+const Charts = ({ period, chartType, totalExpense }: ChartProps) => {
   const { t } = useTranslation();
   const { transactions } = useTransactions();
   const { categories } = useCategories();
@@ -81,7 +82,7 @@ const Charts = ({ period, chartType }: ChartProps) => {
 
   const pieData = expenseCategoriesArray.map((item, index) => ({
     name: `${item.categoryIcon} ${item.categoryName}`,
-    labelname: `${item.categoryIcon} ${item.categoryName} - ${item.amount}`,
+    labelname: `${item.categoryIcon} - ${((item.amount / totalExpense) * 100).toFixed(2)}%`,
     value: item.amount,
     color: COLORS[index % COLORS.length],
   }));

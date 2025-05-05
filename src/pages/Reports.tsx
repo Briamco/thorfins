@@ -153,7 +153,7 @@ const Reports = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Chart */}
-        <Charts period={period} chartType={chartType} />
+        <Charts period={period} chartType={chartType} totalExpense={totalExpense} />
 
         {/* Top Expenses */}
         <TopExpenseCategory user={user} totalExpense={totalExpense} />
