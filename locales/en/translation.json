@@ -195,5 +195,11 @@
   },
   "navbar": {
     "appName": "Thorfins"
+  },
+  "changepass": {
+    "title": "Change Password",
+    "emailButton": "Confirm Email",
+    "changingPassButton": "Changing Password",
+    "changePassButton": "Change Password"
   }
 }

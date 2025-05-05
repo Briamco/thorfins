@@ -24,6 +24,7 @@ interface AuthContextType {
   resendCode: (email: string) => Promise<void>;
   checkAuth: () => Promise<void>;
   updateUser: (currencyId: number) => Promise<void>;
+  changePass: (email: string, newPassword: string) => Promise<void>;
   clearError: () => void;
 }
 
@@ -127,6 +128,23 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   }
 
+  const changePass = async (email: string, newPassword: string) => {
+    try {
+      setLoading(true)
+      setError(null);
+      const data = await authService.updatePassword(email, { newPassword })
+      showToast('success', 'Password Changed')
+      setUser(data)
+      return data
+    } catch (err: any) {
+      setError(err.message || 'Failed to update user');
+      showToast('error', err.message || 'Failed to update user');
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  }
+
   const checkAuth = useCallback(async () => {
     const storedToken = localStorage.getItem('financeToken');
     if (!storedToken) {
@@ -164,6 +182,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         verifyCode,
         resendCode,
         updateUser,
+        changePass,
         checkAuth,
         clearError,
       }}

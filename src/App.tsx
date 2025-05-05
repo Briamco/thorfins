@@ -13,6 +13,7 @@ import Settings from './pages/Settings';
 import NotFound from './pages/NotFound';
 import { useTheme } from './hooks/useTheme';
 import { Cog, Loader } from 'lucide-react';
+import ChangePassword from './pages/ChangePassword';
 
 function App() {
   const { user, loading, checkAuth, resendCode } = useAuth();
@@ -49,6 +50,7 @@ function App() {
         <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
         <Route path="/register" element={!user ? <Register /> : <Navigate to="/" />} />
         <Route path="/verify" element={!user?.verified ? <Verify /> : <Navigate to="/" />} />
+        <Route path="/changepass" element={<ChangePassword />} />
 
         <Route element={<ProtectedRoute user={user} />}>
           <Route element={<Layout />}>

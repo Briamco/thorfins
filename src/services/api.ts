@@ -25,6 +25,10 @@ interface UpdateUserParams {
   currencyId: number;
 }
 
+interface UpdatePasswordParams {
+  newPassword: string;
+}
+
 interface TransactionParams {
   amount: number;
   type: 'expense' | 'income';
@@ -97,6 +101,9 @@ export const authService = {
 
   updateUser: (token: string, data: UpdateUserParams) =>
     makeRequest('/auth/me/update', 'PUT', data, token),
+
+  updatePassword: (email: string, data: UpdatePasswordParams) =>
+    makeRequest(`/auth/changepass?email=${email}`, 'PUT', data),
 
   logout: () =>
     makeRequest('/auth/logout', 'POST'),

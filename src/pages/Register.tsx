@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useAuth } from '../hooks/useAuth';
 import { useTheme } from '../hooks/useTheme';
 import { useCurrency } from '../hooks/useCurrency';
+import LenguageSelector from '../components/LenguageSelector';
 
 const Register = () => {
   const { t } = useTranslation();
@@ -65,10 +66,13 @@ const Register = () => {
 
   return (
     <div className={`${theme} min-h-screen flex flex-col justify-center items-center bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8`}>
+      <div className="fixed top-5 right-5">
+        <LenguageSelector />
+      </div>
       <div className="max-w-md w-full space-y-8 bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg">
         <div>
           <div className="mx-auto h-12 w-12 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center">
-            <span className="text-primary-600 dark:text-primary-300 text-2xl font-bold">F</span>
+            <span className="text-primary-600 dark:text-primary-300 text-2xl font-bold">T</span>
           </div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white">
             {t('register.createAccountTitle')}

@@ -5,12 +5,14 @@ import { useAuth } from '../hooks/useAuth';
 import { useTheme } from '../hooks/useTheme';
 import { useCurrency } from '../hooks/useCurrency';
 import LenguageSelector from '../components/LenguageSelector';
+import { useNavigate } from 'react-router-dom';
 
 const Settings = () => {
   const { t } = useTranslation();
   const { user, logout, updateUser, checkAuth } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const { currencies } = useCurrency();
+  const navigate = useNavigate()
 
   const [currencyId, setCurrencyId] = useState(user?.currencyId);
   const [activeTab, setActiveTab] = useState('account');
@@ -65,7 +67,9 @@ const Settings = () => {
               <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
                 <h3 className="text-md font-medium text-gray-900 dark:text-white mb-4">{t('settings.accountSecurity')}</h3>
 
-                <button className="w-full py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 dark:focus:ring-offset-gray-900">
+                <button
+                  onClick={() => navigate('/changepass')}
+                  className="w-full py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 dark:focus:ring-offset-gray-900">
                   {t('settings.changePasswordButton')}
                 </button>
 
